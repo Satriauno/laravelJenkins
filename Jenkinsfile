@@ -1,4 +1,9 @@
 node {
+    // Fix PATH for this pipeline
+    environment {
+        PATH+EXTRA = '/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin'
+    }
+    
     checkout scm
 
     // Debug: verify environment
@@ -7,9 +12,8 @@ node {
             sh 'echo "=== PATH ==="'
             sh 'echo $PATH'
             sh 'echo "=== which docker ==="'
-            sh 'which docker'
-            sh 'echo "=== docker version ==="'
-            sh 'docker --version'
+            sh 'which docker || echo "docker NOT FOUND"'
+            sh 'docker --version || echo "docker command FAILED"'
         }
     }
 
